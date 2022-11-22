@@ -1,0 +1,43 @@
+
+<nav th:fragment="barra-menu"
+	class="navbar navbar-expand-lg navbar-light bg-light">
+	<div class="container-fluid">
+
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+			data-bs-target="#navbarNav" aria-controls="navbarNav"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav">
+
+				<li class="nav-item" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+					<a class="nav-link" th:href="@{/usuarios/index}">USUARIOS</a>
+				</li>
+
+				<li class="nav-item" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+					<a class="nav-link" th:href="@{/productos/index}">PRODUCTOS</a>
+				</li>
+				
+				<li class="nav-item" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+				<a class="nav-link" th:href="@{/resumen/index}">RESUMEN</a></li>
+				
+				<li sec:authorize="hasAnyAuthority('ROLE_USER')">
+				<a class="nav-link" th:href="@{/productos/index}">PRODUCTOS</a>
+				</li>
+
+				<div sec:authorize="isAnonymous()">
+					<a class="btn btn-primary" th:href="@{/index}">Login</a>&nbsp; <a
+						class="btn btn-primary" th:href="@{/signup}">Registro</a>&nbsp;
+				</div>
+
+				<div sec:authorize="isAuthenticated()">
+					<span th:if="${session.usuario!=null}"
+						th:text="'Bienvenido: ' + ${session.usuario.username}"></span>
+					<!-- <span>Bienvenido</span>&nbsp;<span sec:authentication="name"></span>&nbsp; -->
+					<a class="btn btn-primary" th:href="@{/logout}">Salir</a>
+				</div>
+		</div>
+	</div>
+
+</nav>
